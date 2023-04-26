@@ -4,12 +4,13 @@ export default function DarkModeIcon() {
   const [darkmode, setDarkmode] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("theme") !== "dark") {
-      localStorage.setItem("theme", "light");
-      document.documentElement.classList.remove("dark");
-    } else {
+    if (localStorage.getItem("theme") === "dark" || (window.matchMedia("(prefers-color-scheme: dark)").matches) && !localStorage.getItem("theme")) {
       setDarkmode(true);
+      localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
+    } else {
+      setDarkmode(false);
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
